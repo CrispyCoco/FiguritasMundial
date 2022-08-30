@@ -99,6 +99,16 @@ class Menu extends Component {
                 // showLabel: false,
               }}
             >
+              
+              <Drawer.Screen
+                name="Login"
+                component={() => (
+                  <Login
+                    login={(email, password) => this.login(email, password)}
+                    error={this.state.error}
+                  />
+                )}
+              />
               <Drawer.Screen
                 name="Register"
                 component={() => (
@@ -106,15 +116,6 @@ class Menu extends Component {
                     register={(email, password, username, url) =>
                       this.register(email, password, username, url)
                     }
-                    error={this.state.error}
-                  />
-                )}
-              />
-              <Drawer.Screen
-                name="Login"
-                component={() => (
-                  <Login
-                    login={(email, password) => this.login(email, password)}
                     error={this.state.error}
                   />
                 )}
@@ -134,7 +135,7 @@ class Menu extends Component {
                 // showLabel: false,
               }}
             >
-              <Drawer.Screen name="LaTe" component={() => <OwnedList />} />
+              <Drawer.Screen name="LaTe" component={() => <OwnedList logout={()=>this.logout()} />} />
               <Drawer.Screen name="Buscar" component={() => <Search />} />
               <Drawer.Screen name="Repe" component={() => <Repeat />} />
             </Drawer.Navigator>
@@ -165,6 +166,9 @@ const screenOptions = (route, color) => {
       break;
     case "Buscar":
       iconName = "search1";
+      break;
+    case "Register":
+      iconName = "adduser";
       break;
     // default:
     //   break;

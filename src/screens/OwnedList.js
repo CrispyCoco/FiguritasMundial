@@ -125,6 +125,7 @@ class OwnedList extends Component {
             // contentContainerStyle={styles.items}
           />
         </ScrollView>
+        
       </View>
     );
   }
@@ -207,3 +208,7 @@ const styles = StyleSheet.create({
 });
 
 export default OwnedList;
+
+{/* <TouchableOpacity onPress={()=>this.props.logout()}>
+            <Text>Logout</Text>
+        </TouchableOpacity> */}
