@@ -1,0 +1,4 @@
+Foto login: <a href="https://storyset.com/user">User illustrations by Storyset</a> 
+Foto register: <a href="https://storyset.com/phone">Phone illustrations by Storyset</a>
+World cup: <a href="https://www.flaticon.com/free-icons/soccer" title="soccer icons">Soccer icons created by Roundicons - Flaticon</a>
+Pais: <a href="https://www.flaticon.com/free-icons/NOMBREDELPAIS" title="NOMBREDELPAIS icons">NOMBREDELPAIS icons created by Freepik - Flaticon</a>
