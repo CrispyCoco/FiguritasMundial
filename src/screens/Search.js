@@ -310,6 +310,8 @@ class Search extends Component {
       });
   }
   find() {
+    let buscada = this.state.countryDb
+    buscada.number = this.state.number
     let tempList = [];
     this.setState({ have: false, figu: "", listita: [] }, () => {
       this.state.figus.forEach((figu) => {
@@ -322,7 +324,7 @@ class Search extends Component {
           }
         }
       });
-      this.setState({ searched: true, listita: tempList });
+      this.setState({ searched: true, listita: tempList, country: '', number: '', countryDb: buscada});
     //   console.log(this.state.listita.length);
     });
   }
@@ -428,7 +430,7 @@ class Search extends Component {
             </View>
           ) : (
             <View style={styles.container}>
-              <Text style={styles.news}>No tenés esa</Text>
+              <Text style={styles.news}>No tenés {this.state.countryDb.lable} {this.state.countryDb.number}</Text>
             </View>
           )
         ) : null}

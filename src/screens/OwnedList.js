@@ -14,6 +14,7 @@ import MyModal from "../components/MyModal";
 
 import { db, auth } from "../firebase/config";
 import firebase from "firebase";
+import {v4 as uuid} from 'uuid'
 
 import { SelectCountry, Dropdown } from "react-native-element-dropdown";
 import AntDesign from "react-native-vector-icons/AntDesign";
@@ -65,8 +66,9 @@ class OwnedList extends Component {
       this.setState({ error: "Ya tenés esa figurita" });
     } else {
         this.setState({error: ''})
-      newFigu.id = this.state.owned.length;
-      db.collection("figus")
+    //   newFigu.id = this.state.owned.length;
+    newFigu.id = uuid();
+    db.collection("figus")
         .doc(this.state.figus.id)
         .update({
           owned: firebase.firestore.FieldValue.arrayUnion(newFigu),
@@ -116,7 +118,7 @@ class OwnedList extends Component {
         <ScrollView contentContainerStyle={styles.stickerList}>
           <FlatList
             data={this.state.owned}
-            keyExtractor={(figu) => figu.value}
+            keyExtractor={(figu) => figu.id}
             renderItem={({ item }) => (
               <Sticker figu={item} delete={(figu) => this.delete(figu)} />
             )}

@@ -14,6 +14,7 @@ import MyModal from "../components/MyModal";
 
 import { db, auth } from "../firebase/config";
 import firebase from "firebase";
+import { v4 as uuid } from "uuid";
 
 import { SelectCountry, Dropdown } from "react-native-element-dropdown";
 import AntDesign from "react-native-vector-icons/AntDesign";
@@ -291,7 +292,7 @@ class Repeat extends Component {
       repeat: "",
       modal: false,
       error: "",
-      owned:''
+      owned: "",
     };
   }
   componentDidMount() {
@@ -309,29 +310,53 @@ class Repeat extends Component {
           figus = fig;
         });
 
-        this.setState({ figus: figus, repeat: figus.data.repeat, owned: figus.data.owned });
+        this.setState({
+          figus: figus,
+          repeat: figus.data.repeat,
+          owned: figus.data.owned,
+        });
       });
   }
   addToList(countryDb, number) {
     let newFigu = countryDb;
     newFigu.number = number;
-    newFigu.id = this.state.repeat.length;
+    newFigu.id = uuid();
+    let ok = false
+    // newFigu.id = this.state.repeat.length;
     if (newFigu.number == 0 || newFigu.number > 19) {
       if (newFigu.lable != "FWC") {
         this.setState({ error: "No existe esa figurita" });
       }
       return;
     }
-    if(!this.state.owned.includes(newFigu)){
-        this.setState({error: 'No tenes esa figurita'})
-        return
+    console.log(this.state.owned);
+    this.state.owned.forEach((element) => {
+      if (element.lable === newFigu.lable && element.number == newFigu.number) {
+        ok = true;
+      }
+    });
+    if (ok) {
+      db.collection("figus")
+        .doc(this.state.figus.id)
+        .update({
+          repeat: firebase.firestore.FieldValue.arrayUnion(newFigu),
+        })
+        .then(() => {
+          this.setState({
+            country: "",
+            countryDb: "",
+            number: "",
+            error: "",
+          });
+        });
+    } else {
+      this.setState({
+        error: "No tenes esa figurita",
+        country: "",
+        countryDb: "",
+        number: "",
+      });
     }
-    db.collection("figus")
-      .doc(this.state.figus.id)
-      .update({
-        repeat: firebase.firestore.FieldValue.arrayUnion(newFigu),
-      })
-      .then(() => this.setState({ country: "", countryDb: "", number: "", error: '' }));
   }
   showModal() {
     this.setState({ modal: !this.state.modal, error: "" });
@@ -375,11 +400,13 @@ class Repeat extends Component {
         <ScrollView contentContainerStyle={styles.stickerList}>
           <FlatList
             data={this.state.repeat}
-            keyExtractor={(figu) => figu.value}
-            renderItem={({ item }) => <Sticker figu={item} delete={(figu)=>this.delete(figu)}/>}
+            keyExtractor={(figu) => figu.id}
+            renderItem={({ item }) => (
+              <Sticker figu={item} delete={(figu) => this.delete(figu)} />
+            )}
             nestedScrollEnabled={true}
             style={styles.flatlist}
-            
+
             // contentContainerStyle={styles.items}
           />
         </ScrollView>
