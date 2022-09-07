@@ -7,8 +7,8 @@ import { auth, db } from "../firebase/config";
 import Icon from "react-native-vector-icons/AntDesign";
 
 import OwnedList from "../screens/OwnedList";
-import Register from "../screens/register";
-import Login from "../screens/login";
+import Register from "../screens/Register";
+import Login from "../screens/Login";
 import Search from "../screens/Search";
 import Repeat from "../screens/Repeat";
 
