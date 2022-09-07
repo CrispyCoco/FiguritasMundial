@@ -27,7 +27,14 @@
       }
     },
     "web": {
-      "favicon": "./assets/favicon.png"
+      "backgroundColor": "#ffffff",
+      "description": "This is a demo app",
+      "display": "standalone",
+      "themeColor": "#008080",
+      "splash": {
+        "image": "./assets/splash.png",
+        "resizeMode": "contain"
+      }
     }
   }
 }
